@@ -1,12 +1,11 @@
 package com.coco.inspirelink.controller;
 
+import com.coco.inspirelink.common.response.Result;
 import com.coco.inspirelink.dto.UserDTO;
-import com.coco.inspirelink.service.SearchforUser;
 import com.coco.inspirelink.service.UserLogin;
-import com.coco.inspirelink.service.impl.SearchforUserImpl;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
@@ -18,12 +17,13 @@ import javax.annotation.Resource;
  * @Version: 1.0
  */
 @RestController
-public class UserVerifyContriller {
+public class UserVerifyController {
     @Resource
     private UserLogin userLogin;
 
     @PostMapping("/login")
-    public String solveLogin(@RequestBody UserDTO userDTO){
-        return userLogin.login(userDTO);
+    public ResponseEntity<?> solveLogin(@RequestBody UserDTO userDTO){
+        String token = userLogin.login(userDTO);
+        return ResponseEntity.ok().body(Result.success("登陆成功",token));
     }
 }

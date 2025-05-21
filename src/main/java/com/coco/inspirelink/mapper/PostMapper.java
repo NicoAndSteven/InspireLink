@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
  * @Version: 1.0
  */
 @Mapper
-public interface Post extends BaseMapper<Post> {
+public interface PostMapper extends BaseMapper<PostMapper> {
 }

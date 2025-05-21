@@ -7,5 +7,12 @@ package com.coco.inspirelink.dto;
  * @Version: 1.0
  */
 
-public class PostVPostDTO {
+public class PostDTO {
+    private String title;
+    private String content;
+    private String username;
+    private String time;
+    private String id;
+    private String userid;
+    private String comment;
 }
