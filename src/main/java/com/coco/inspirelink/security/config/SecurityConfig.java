@@ -1,6 +1,6 @@
 package com.coco.inspirelink.security.config;
 
-import com.coco.inspirelink.common.Role;
+import com.coco.inspirelink.common.right.Role;
 import com.coco.inspirelink.security.filter.JwtAuthFilter;
 import com.coco.inspirelink.security.service.WechatOAuth2UserService;
 import com.coco.inspirelink.utils.jwt.JwtTokenProvider;

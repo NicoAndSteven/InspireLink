@@ -7,73 +7,83 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.oauth2.core.user.OAuth2User;
 
 import java.util.Collection;
-import java.util.List;
 import java.util.Map;
 
 /**
  * @Author: MOHE
- * @Description: TODO
+ * @Description: 自定义用户详情类，同时支持OAuth2和基本认证
  * @Date: 2025/5/20 下午4:47
  * @Version: 1.0
  */
-
 public class CustomUserDetails implements UserDetails, OAuth2User {
     private final User user;
     private final Map<String, Object> attributes;
+    private final Collection<? extends GrantedAuthority> authorities;
 
-    public CustomUserDetails(User user,Map<String, Object> attributes) {
+    public CustomUserDetails(User user, Map<String, Object> attributes) {
         this.user = user;
         this.attributes = attributes;
+        this.authorities = null;
+    }
+
+    public CustomUserDetails(User user, Map<String, Object> attributes, Collection<? extends GrantedAuthority> authorities) {
+        this.user = user;
+        this.attributes = attributes;
+        this.authorities = authorities;
     }
 
     @Override
     public String getUsername() {
-        // 统一使用数据库ID或openid作为principal
         return user.getUserId();
     }
 
     @Override
     public boolean isAccountNonExpired() {
-        return UserDetails.super.isAccountNonExpired();
+        return "active".equals(user.getStatus());
     }
 
     @Override
     public boolean isAccountNonLocked() {
-        return UserDetails.super.isAccountNonLocked();
+        return "active".equals(user.getStatus());
     }
 
     @Override
     public boolean isCredentialsNonExpired() {
-        return UserDetails.super.isCredentialsNonExpired();
+        return true;
     }
 
     @Override
     public boolean isEnabled() {
-        return UserDetails.super.isEnabled();
+        return "active".equals(user.getStatus());
     }
 
     @Override
     public <A> A getAttribute(String name) {
-        return OAuth2User.super.getAttribute(name);
+        return (A) attributes.get(name);
     }
 
     @Override
     public Map<String, Object> getAttributes() {
-        return Map.of();
+        return attributes;
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+        return authorities != null ? authorities : 
+            java.util.Collections.singletonList(new SimpleGrantedAuthority("ROLE_USER"));
     }
 
     @Override
     public String getPassword() {
-        return "";
+        return user.getPassword() != null ? user.getPassword() : "";
     }
 
     @Override
     public String getName() {
-        return "";
+        return user.getUsername();
+    }
+
+    public User getUser() {
+        return user;
     }
 }

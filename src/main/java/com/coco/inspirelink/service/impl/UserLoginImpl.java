@@ -1,7 +1,7 @@
 package com.coco.inspirelink.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
-import com.coco.inspirelink.common.Role;
+import com.coco.inspirelink.common.right.Role;
 import com.coco.inspirelink.dto.UserDTO;
 import com.coco.inspirelink.entity.User;
 import com.coco.inspirelink.mapper.UserMapper;

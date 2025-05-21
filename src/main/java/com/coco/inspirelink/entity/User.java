@@ -22,5 +22,5 @@ public class User {
     private String createAt;
     private String updateAt;
     private String wechatOpenid;
-    private String Roles;
+    private int Roles;
 }
